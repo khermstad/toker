@@ -33,7 +33,6 @@ dependencies {
     compile (group: 'io.springfox', name: 'springfox-swagger2', version:'2.6.0') {
         exclude(module: 'slf4j-api')
     }
-
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
