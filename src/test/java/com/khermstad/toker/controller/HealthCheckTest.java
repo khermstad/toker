@@ -32,7 +32,4 @@ public class HealthCheckTest {
         String checkResponse = mockMvc.perform(get("/")).andReturn().getResponse().getContentAsString();
         Assert.assertEquals("Application is Running", checkResponse);
     }
-
-    public MockMvc getMockMvc() { return mockMvc; }
-    public void setMockMvc(MockMvc mockMvc) { this.mockMvc = mockMvc; }
 }
