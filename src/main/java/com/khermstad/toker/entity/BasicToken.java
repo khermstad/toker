@@ -23,4 +23,8 @@ public class BasicToken {
 
     @Column(name = "CREATE_DATE")
     private Timestamp createDate;
+
+    @Column(name = "previousValue")
+    private String previousValue;
+
 }
