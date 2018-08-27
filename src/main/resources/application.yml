@@ -1,12 +1,14 @@
+server:
+  port: 8081
 ---
 spring:
-  profiles: dev, unittest
+  profiles: dev, default
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
   datasource:
-    url: jdbc:h2:mem:toker-h2;
+    url: jdbc:h2:~/toker-h2;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -15,7 +17,20 @@ spring:
     console:
       enabled: true
       path: /console
-
 ---
-server:
-  port: 8081
+spring:
+  profiles: unittest
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    platform: h2
+  h2:
+    console:
+      enabled: true
+      path: /console

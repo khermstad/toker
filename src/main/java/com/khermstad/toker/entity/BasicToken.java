@@ -4,6 +4,7 @@ package com.khermstad.toker.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -11,9 +12,15 @@ import javax.persistence.*;
 public class BasicToken {
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name="ID")
     private Long id;
 
-    @Column(name = "value")
+    @Column(name = "VALUE")
     private String value;
+
+    @Column(name = "USER_ID")
+    private String userId;
+
+    @Column(name = "CREATE_DATE")
+    private Timestamp createDate;
 }
