@@ -64,4 +64,12 @@ public class BasicTokenRepositoryTest {
         Assert.assertTrue(basicTokens.size() == 1);
     }
 
+    @Test
+    public void findByApplicationIdAndValueTest(){
+        BasicToken basicToken = new BasicToken("A1", "ABC123", false, repositoryUtil.getCurrentTimestamp());
+        basicTokenRepository.save(basicToken);
+        BasicToken findByResult = basicTokenRepository.findByApplicationIdAndValue("A1", "ABC123");
+        Assert.assertNotNull(findByResult);
+    }
+
 }
