@@ -12,4 +12,8 @@ public class BasicTokenResponse {
         this.isSuccessful = isSuccessful;
         this.message = message;
     }
+
+    public BasicTokenResponse(){
+
+    }
 }
