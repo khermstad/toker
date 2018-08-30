@@ -20,16 +20,46 @@ public class BasicTokenService {
 
         // first, check if application id already exists.
         if(applicationIdExists(basicToken.getApplicationId())){
-            return new BasicTokenResponse("Application Id Exists");
+            return new BasicTokenResponse("Application Id Exists", false);
         }
 
         // save token in repo
         basicTokenRepository.save(basicToken);
 
-        return new BasicTokenResponse("Insert Successful");
+        return new BasicTokenResponse("Insert Successful", true);
+    }
+
+    public BasicTokenResponse enableTokenForApplicationId(String applicationId){
+        BasicToken requestedApplication =  basicTokenRepository.findByApplicationId(applicationId);
+        if (null != requestedApplication){
+            requestedApplication.setEnabled(true);
+        }
+        else{
+            return new BasicTokenResponse("Application Id Not Found", false);
+        }
+        return updateTokenIsEnabled(requestedApplication);
+    }
+
+    public BasicTokenResponse disableTokenForApplicationId(String applicationId){
+        BasicToken requestedApplication =  basicTokenRepository.findByApplicationId(applicationId);
+        if (null != requestedApplication){
+            requestedApplication.setEnabled(false);
+        }
+        else{
+            return new BasicTokenResponse("Application Id Not Found", false);
+        }
+        return updateTokenIsEnabled(requestedApplication);
+    }
+
+    public BasicTokenResponse updateTokenIsEnabled(BasicToken basicToken){
+        basicTokenRepository.save(basicToken);
+        if(basicToken.isEnabled()){
+            return new BasicTokenResponse("Token Enabled", true);
+        }
+        return new BasicTokenResponse("Token Disabled", true);
     }
 
     public boolean applicationIdExists(String applicationId){
-        return basicTokenRepository.findByApplicationId(applicationId).size() > 0;
+        return null != basicTokenRepository.findByApplicationId(applicationId);
     }
 }

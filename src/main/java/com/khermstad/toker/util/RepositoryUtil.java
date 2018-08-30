@@ -11,7 +11,7 @@ import java.util.TimeZone;
 public class RepositoryUtil {
 
     public Timestamp getCurrentTimestamp(){
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
         dateFormat.setTimeZone(TimeZone.getTimeZone("America/New_York"));
         return Timestamp.valueOf(dateFormat.format(calendar.getTime()));

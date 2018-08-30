@@ -9,7 +9,7 @@ import java.util.List;
 @Transactional
 public interface BasicTokenRepository extends JpaRepository<BasicToken, Long> {
 
-    List<BasicToken> findByApplicationId(String applicationId);
+    BasicToken findByApplicationId(String applicationId);
     BasicToken findByApplicationIdAndValue(String applicationId, String value);
 
 }

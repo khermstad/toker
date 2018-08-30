@@ -59,9 +59,9 @@ public class BasicTokenRepositoryTest {
         basicTokenRepository.save(basicToken1);
         basicTokenRepository.save(basicToken2);
 
-        List<BasicToken> basicTokens = basicTokenRepository.findByApplicationId("A1");
+        BasicToken basicToken = basicTokenRepository.findByApplicationId("A1");
 
-        Assert.assertTrue(basicTokens.size() == 1);
+        Assert.assertTrue(null != basicToken);
     }
 
     @Test
