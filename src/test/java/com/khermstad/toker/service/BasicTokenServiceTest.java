@@ -1,6 +1,5 @@
 package com.khermstad.toker.service;
 
-import com.khermstad.toker.constant.BasicTokenGeneratorConstant;
 import com.khermstad.toker.entity.BasicToken;
 import com.khermstad.toker.repository.BasicTokenRepository;
 import com.khermstad.toker.to.BasicTokenResponse;
@@ -44,15 +43,15 @@ public class BasicTokenServiceTest {
 
     @Test
     public void insertNewBasicTokenTest(){
-        BasicToken basicToken = new BasicToken(applicationId, tokenValue, true, repositoryUtil.getCurrentTimestamp());
+        BasicToken basicToken = getValidTestToken(true);
         BasicTokenResponse basicTokenResponse = basicTokenService.insertNewBasicToken(basicToken);
         Assert.assertTrue(basicTokenResponse.isSuccessful());
     }
 
     @Test
     public void insertDuplicateBasicTokenTest(){
-        BasicToken basicToken = new BasicToken(applicationId, tokenValue, true, repositoryUtil.getCurrentTimestamp());
-        BasicToken basicToken2 = new BasicToken(applicationId, tokenValue, true, repositoryUtil.getCurrentTimestamp());
+        BasicToken basicToken =  getValidTestToken(true);
+        BasicToken basicToken2 =  getValidTestToken(true);
 
         BasicTokenResponse basicTokenResponse1 = basicTokenService.insertNewBasicToken(basicToken);
         Assert.assertTrue(basicTokenResponse1.isSuccessful());
@@ -69,13 +68,13 @@ public class BasicTokenServiceTest {
 
     @Test
     public void applicationIdDoesExistTest(){
-        basicTokenRepository.save(new BasicToken(applicationId, tokenValue, false, repositoryUtil.getCurrentTimestamp()));
+        basicTokenRepository.save( getValidTestToken(false));
         Assert.assertTrue(basicTokenService.applicationIdExists(applicationId));
     }
 
     @Test
     public void updateTokenToEnabledTest(){
-        BasicToken initialToken = new BasicToken(applicationId, tokenValue, false, repositoryUtil.getCurrentTimestamp());
+        BasicToken initialToken =  getValidTestToken(false);
         basicTokenService.insertNewBasicToken(initialToken);
         BasicToken savedToken = basicTokenRepository.findByApplicationId(applicationId);
         Assert.assertFalse(savedToken.isEnabled());
@@ -88,7 +87,7 @@ public class BasicTokenServiceTest {
 
     @Test
     public void updateTokenToDisabledTest(){
-        BasicToken initialToken = new BasicToken(applicationId, tokenValue, true, repositoryUtil.getCurrentTimestamp());
+        BasicToken initialToken =  getValidTestToken(true);
         basicTokenService.insertNewBasicToken(initialToken);
         BasicToken savedToken = basicTokenRepository.findByApplicationId(applicationId);
         Assert.assertTrue(savedToken.isEnabled());
@@ -101,7 +100,7 @@ public class BasicTokenServiceTest {
 
     @Test
     public void enableTokenForApplicationIdTest() {
-        BasicToken initialToken = new BasicToken(applicationId, tokenValue, false, repositoryUtil.getCurrentTimestamp());
+        BasicToken initialToken =  getValidTestToken(false);
         basicTokenService.insertNewBasicToken(initialToken);
         BasicToken savedToken = basicTokenRepository.findByApplicationId(applicationId);
         Assert.assertFalse(savedToken.isEnabled());
@@ -118,7 +117,7 @@ public class BasicTokenServiceTest {
 
     @Test
     public void disableTokenForApplicationTest(){
-        BasicToken initialToken = new BasicToken(applicationId, tokenValue, false, repositoryUtil.getCurrentTimestamp());
+        BasicToken initialToken =  getValidTestToken(false);
         basicTokenService.insertNewBasicToken(initialToken);
         BasicToken savedToken = basicTokenRepository.findByApplicationId(applicationId);
         Assert.assertFalse(savedToken.isEnabled());
@@ -131,6 +130,10 @@ public class BasicTokenServiceTest {
     public void disableTokenForApplicationIdNullTokenTest(){
         BasicTokenResponse basicTokenResponse = basicTokenService.disableTokenForApplicationId(applicationId);
         Assert.assertFalse(basicTokenResponse.isSuccessful());
+    }
+
+    public BasicToken getValidTestToken(boolean isEnabled){
+        return new BasicToken(applicationId, tokenValue, isEnabled, repositoryUtil.getCurrentTimestamp());
     }
 
 }
